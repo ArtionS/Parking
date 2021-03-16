@@ -7,12 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Configuration;
 using MySql.Data.MySqlClient;
 
 namespace ParkingCucei
 {
     public partial class Form1 : Form
     {
+        private string connectionString = ConfigurationManager.AppSettings.Get("connectionString");
+
         public Form1()
         {
             InitializeComponent();
@@ -22,7 +25,7 @@ namespace ParkingCucei
         {
             try
             {
-                MySqlConnection con = new MySqlConnection("datasource=localhost;port=3306;username=root;password=12345");
+                MySqlConnection con = new MySqlConnection(connectionString);
                 con.Open();
                 
                 if(con.State == ConnectionState.Open)
