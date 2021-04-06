@@ -1,7 +1,12 @@
 
+pasword para la  DB sera: 1234
 
 -- SCRIPT SQL v3.1 - parkDB
 -- ACTUALIZADO: 25 ABRIL 2020
+
+CREATE DATABASE parkdb;
+
+use parkdb;
 
 CREATE TABLE vehiculos
 (
