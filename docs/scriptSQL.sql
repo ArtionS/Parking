@@ -11,7 +11,7 @@ use parkdb;
 
 CREATE TABLE users
 (
-    id_user BIGINT PRIMARY KEY auto_increment,
+    id_user BIGINT PRIMARY KEY,
     fname VARCHAR(50) NOT NULL,
     lname VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
