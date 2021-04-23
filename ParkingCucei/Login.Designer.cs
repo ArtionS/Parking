@@ -30,7 +30,7 @@ namespace ParkingCucei
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.txtUsername = new System.Windows.Forms.TextBox();
+            this.txtCode = new System.Windows.Forms.TextBox();
             this.lblUsername = new System.Windows.Forms.Label();
             this.lblPasswd = new System.Windows.Forms.Label();
             this.txtPasswd = new System.Windows.Forms.TextBox();
@@ -48,12 +48,12 @@ namespace ParkingCucei
             this.label1.TabIndex = 0;
             this.label1.Text = "label1";
             // 
-            // txtUsername
+            // txtCode
             // 
-            this.txtUsername.Location = new System.Drawing.Point(200, 85);
-            this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(100, 20);
-            this.txtUsername.TabIndex = 1;
+            this.txtCode.Location = new System.Drawing.Point(200, 85);
+            this.txtCode.Name = "txtCode";
+            this.txtCode.Size = new System.Drawing.Size(100, 20);
+            this.txtCode.TabIndex = 1;
             // 
             // lblUsername
             // 
@@ -109,7 +109,7 @@ namespace ParkingCucei
             this.Controls.Add(this.txtPasswd);
             this.Controls.Add(this.lblPasswd);
             this.Controls.Add(this.lblUsername);
-            this.Controls.Add(this.txtUsername);
+            this.Controls.Add(this.txtCode);
             this.Controls.Add(this.label1);
             this.Name = "Login";
             this.Text = "Form1";
@@ -122,7 +122,7 @@ namespace ParkingCucei
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtUsername;
+        private System.Windows.Forms.TextBox txtCode;
         private System.Windows.Forms.Label lblUsername;
         private System.Windows.Forms.Label lblPasswd;
         private System.Windows.Forms.TextBox txtPasswd;

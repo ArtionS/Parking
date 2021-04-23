@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
 using MySql.Data.MySqlClient;
+using System.Text.RegularExpressions;
 
 namespace ParkingCucei
 {
@@ -50,8 +51,52 @@ namespace ParkingCucei
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            MessageBoxButtons btnConfirm = MessageBoxButtons.OK;
+
+            switch (loginCheck())
+            {
+                case 0:
+                    {
+                        MessageBox.Show("Codigo o contraseña incorrectos.", "Datos incorrectos", btnConfirm);
+                        break;
+                    }
+                case 1:
+                    {
+                        lblConfirmation.Text += "\n Bienvenido!";
+                        break;
+                    }
+                case 2:
+                    {
+                        MessageBox.Show("Falto llenar campos\no estos fueron demasiado largos.", "Campos vacios o demasiados largos.", btnConfirm);
+                        break;
+                    }
+                case 3:
+                    {
+                        MessageBox.Show("El nombre de usuario cuenta con caracteres diferentes a numeros.", "Caracteres diferentes de numeros ingresados.", btnConfirm);
+                        break;
+                    }
+                default:
+                    {
+                        MessageBox.Show("Sucedio un error\nIntentar nuevamente.", "Error.", btnConfirm);
+                        break;
+                    }
+            }
+        }
+
+        private int loginCheck()
+        {
+            if (txtCode.Text == "" || txtPasswd.Text == "" || txtCode.Text.Length > 10 || txtPasswd.Text.Length > 63)
+            {
+                return 2;
+            }
+
+            if (!Regex.IsMatch(txtCode.Text, @"^[0-9]+$"))
+            {
+                return 3;
+            }
+
             // Conseguir los datos de los textbox
-            string code = txtUsername.Text;
+            string code = txtCode.Text;
             string password = txtPasswd.Text;
 
             // Crear query para que utilice los datos ingresados y solo regresa el nombre del  usuario
@@ -62,10 +107,10 @@ namespace ParkingCucei
             {
                 // Crear conexion
                 MySqlConnection con = new MySqlConnection(connectionString);
-                
+
                 // Abrir conexion
                 con.Open();
-                
+
                 // Crear objeto comando con el query y la conexion
                 MySqlCommand command = new MySqlCommand(queryFetch, con);
 
@@ -78,10 +123,12 @@ namespace ParkingCucei
                     // Leer lo que se regreso
                     while (reader.Read())
                     {
-                        lblConfirmation.Text = "Bienvenido usuario, " + reader.GetString(0);
+                        lblConfirmation.Text = "Se encontro usuario, " + reader.GetString(0);
                     }
+                    con.Close();
+                    return 1;
                 }
-
+                
                 // Cerrar la conexion
                 con.Close();
             }
@@ -89,6 +136,7 @@ namespace ParkingCucei
             {
                 MessageBox.Show(ex.Message);
             }
+            return 0;
         }
     }
 }
