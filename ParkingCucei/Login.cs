@@ -138,5 +138,15 @@ namespace ParkingCucei
             }
             return 0;
         }
+
+        private void lblFPass_Click(object sender, EventArgs e)
+        {
+            using (FPasswd newWindow = new FPasswd())
+            {
+                this.Visible = false;
+                newWindow.ShowDialog();
+                this.Close();
+            }
+        }
     }
 }
