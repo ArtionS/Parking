@@ -58,6 +58,7 @@ namespace ParkingCucei
             this.btnFPass.TabIndex = 2;
             this.btnFPass.Text = "Recuperar contraseña";
             this.btnFPass.UseVisualStyleBackColor = true;
+            this.btnFPass.Click += new System.EventHandler(this.btnFPass_Click);
             // 
             // FPasswd
             // 

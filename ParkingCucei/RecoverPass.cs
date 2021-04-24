@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net;
+using System.Net.Mail;
 
 namespace ParkingCucei
 {
@@ -15,6 +17,41 @@ namespace ParkingCucei
         public FPasswd()
         {
             InitializeComponent();
+        }
+
+        private void btnFPass_Click(object sender, EventArgs e)
+        {
+            recoverPassword();
+        }
+
+        private void recoverPassword()
+        {
+            string to, from, pass, messageBody;
+            MailMessage message = new MailMessage();
+            to = "lglvluislopez@gmail.com";
+            from = "parkdbcucei@gmail.com";
+            pass = "parkdbcu";
+            messageBody = "Para cambiar contraseña";
+            message.To.Add(to);
+            message.From = new MailAddress(from);
+            message.Body = "From: " + "<br>Messsage: " + messageBody;
+            message.Subject = "Cambio de contraseña";
+            message.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+            smtp.EnableSsl = true;
+            smtp.Port = 587;
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.Credentials = new NetworkCredential(from, pass);
+
+            try
+            {
+                smtp.Send(message);
+                DialogResult code = MessageBox.Show("Correo enviado exitosamente.", "enviado!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
