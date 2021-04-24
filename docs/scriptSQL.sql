@@ -1,4 +1,4 @@
---pasword para la  DB sera: 1234
+--pasword para la  DB sera: 12345
 
 
 -- SCRIPT SQL v3.1 - parkDB
@@ -51,4 +51,4 @@ CREATE TABLE tickets
 
 );
 
-insert into users (fname, lname, email, passwd) values ('admin', 'admin', 'admin@parkdb.com', sha2('admin', 256));
+insert into users (id_user,fname, lname, email, passwd) values (111000111,'admin', 'admin', 'admin@parkdb.com', sha2('admin', 256));
