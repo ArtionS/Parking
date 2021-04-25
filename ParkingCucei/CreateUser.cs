@@ -184,6 +184,8 @@ namespace ParkingCucei
             btnEliminarUsuario.Enabled = false;
             btnAgregarUsuario.Enabled = true;
             btnCancel.Enabled = false;
+            txtNewPasswd.Visible = false;
+            lblNewPasswd.Visible = false;
 
             clearBoxes();
         }
@@ -194,6 +196,48 @@ namespace ParkingCucei
             btnEliminarUsuario.Enabled = true;
             btnAgregarUsuario.Enabled = false;
             btnCancel.Enabled = true;
+            txtNewPasswd.Visible = true;
+            lblNewPasswd.Visible = true;
+        }
+
+        private void btnGuardarModificacion_Click(object sender, EventArgs e)
+        {
+            updateUser();
+            clearBoxes();
+            switchButtonsToAdd();
+        }
+
+        private void updateUser()
+        {
+            if (txtNewPasswd.Text == "") // En caso de que se deje vacio es porque no se cambiara la contraseña, por lo tanto no se necesita la seguridad para el cambio de contraseña
+            {
+                string userCode = txtCode.Text;
+                string userFName = txtFName.Text;
+                string userLName = txtLName.Text;
+                string userEmail = txtEmail.Text;
+
+                string queryUpdate = "UPDATE users SET id_user = " + userCode + ", fname = '" + userFName + "', lname = '" + userLName + "', email = '" + userEmail + "' WHERE id_user = " + idToWork + ";";
+
+                try
+                {
+                    MySqlConnection con = new MySqlConnection(connectionString);
+
+                    con.Open();
+
+                    MySqlCommand command = new MySqlCommand(queryUpdate, con);
+
+                    MySqlDataReader reader = command.ExecuteReader();
+
+                    con.Close();
+
+                    MessageBox.Show("Se modificó exitosamente el usuario", "Usuario modificado!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    clearBoxes();
+                }
+            }
         }
     }
 }

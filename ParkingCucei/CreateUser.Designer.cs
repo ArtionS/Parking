@@ -46,7 +46,7 @@ namespace ParkingCucei
             this.btnEliminarUsuario = new System.Windows.Forms.Button();
             this.btnGuardarModificacion = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblNewPasswd = new System.Windows.Forms.Label();
             this.txtNewPasswd = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
@@ -187,6 +187,7 @@ namespace ParkingCucei
             this.btnGuardarModificacion.TabIndex = 15;
             this.btnGuardarModificacion.Text = "Guardar modificacion de usuario";
             this.btnGuardarModificacion.UseVisualStyleBackColor = true;
+            this.btnGuardarModificacion.Click += new System.EventHandler(this.btnGuardarModificacion_Click);
             // 
             // btnCancel
             // 
@@ -199,14 +200,15 @@ namespace ParkingCucei
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // label7
+            // lblNewPasswd
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(289, 131);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(98, 13);
-            this.label7.TabIndex = 17;
-            this.label7.Text = "Nueva contraseña:";
+            this.lblNewPasswd.AutoSize = true;
+            this.lblNewPasswd.Location = new System.Drawing.Point(289, 131);
+            this.lblNewPasswd.Name = "lblNewPasswd";
+            this.lblNewPasswd.Size = new System.Drawing.Size(98, 13);
+            this.lblNewPasswd.TabIndex = 17;
+            this.lblNewPasswd.Text = "Nueva contraseña:";
+            this.lblNewPasswd.Visible = false;
             // 
             // txtNewPasswd
             // 
@@ -214,6 +216,7 @@ namespace ParkingCucei
             this.txtNewPasswd.Name = "txtNewPasswd";
             this.txtNewPasswd.Size = new System.Drawing.Size(135, 20);
             this.txtNewPasswd.TabIndex = 18;
+            this.txtNewPasswd.Visible = false;
             // 
             // CreateUser
             // 
@@ -221,7 +224,7 @@ namespace ParkingCucei
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.txtNewPasswd);
-            this.Controls.Add(this.label7);
+            this.Controls.Add(this.lblNewPasswd);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnGuardarModificacion);
             this.Controls.Add(this.btnEliminarUsuario);
@@ -265,7 +268,7 @@ namespace ParkingCucei
         private System.Windows.Forms.Button btnEliminarUsuario;
         private System.Windows.Forms.Button btnGuardarModificacion;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblNewPasswd;
         private System.Windows.Forms.TextBox txtNewPasswd;
     }
 }
