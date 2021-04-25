@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Mail;
 
+
 namespace ParkingCucei
 {
     public partial class FPasswd : Form
@@ -21,7 +22,19 @@ namespace ParkingCucei
 
         private void btnFPass_Click(object sender, EventArgs e)
         {
-            recoverPassword();
+            String r = RandomString(8);
+            lblCodeRecover.Text = r;
+            // recoverPassword();
+        }
+
+        private void checkUserID()
+        {
+
+        }
+
+        private void changePasswordDB()
+        {
+
         }
 
         private void recoverPassword()
@@ -52,6 +65,20 @@ namespace ParkingCucei
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+        private static string RandomString(int length)
+        {
+            Random random = new Random();
+            const string pool = "abcdefghijklmnopqrstuvwxyz0123456789";
+            var builder = new StringBuilder();
+
+            for (var i = 0; i < length; i++)
+            {
+                var c = pool[random.Next(0, pool.Length)];
+                builder.Append(c);
+            }
+
+            return builder.ToString();
         }
     }
 }

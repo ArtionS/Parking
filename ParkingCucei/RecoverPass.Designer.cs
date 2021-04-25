@@ -29,19 +29,19 @@ namespace ParkingCucei
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblCodeRecover = new System.Windows.Forms.Label();
             this.txtFPass = new System.Windows.Forms.TextBox();
             this.btnFPass = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // label1
+            // lblCodeRecover
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(89, 122);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Nombre";
+            this.lblCodeRecover.AutoSize = true;
+            this.lblCodeRecover.Location = new System.Drawing.Point(89, 122);
+            this.lblCodeRecover.Name = "lblCodeRecover";
+            this.lblCodeRecover.Size = new System.Drawing.Size(40, 13);
+            this.lblCodeRecover.TabIndex = 0;
+            this.lblCodeRecover.Text = "Codigo";
             // 
             // txtFPass
             // 
@@ -67,7 +67,7 @@ namespace ParkingCucei
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.btnFPass);
             this.Controls.Add(this.txtFPass);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblCodeRecover);
             this.Name = "FPasswd";
             this.Text = "Recuperar contraseña";
             this.ResumeLayout(false);
@@ -77,7 +77,7 @@ namespace ParkingCucei
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblCodeRecover;
         private System.Windows.Forms.TextBox txtFPass;
         private System.Windows.Forms.Button btnFPass;
     }
