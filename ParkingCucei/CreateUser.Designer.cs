@@ -214,6 +214,7 @@ namespace ParkingCucei
             // 
             this.txtNewPasswd.Location = new System.Drawing.Point(422, 131);
             this.txtNewPasswd.Name = "txtNewPasswd";
+            this.txtNewPasswd.PasswordChar = '*';
             this.txtNewPasswd.Size = new System.Drawing.Size(135, 20);
             this.txtNewPasswd.TabIndex = 18;
             this.txtNewPasswd.Visible = false;

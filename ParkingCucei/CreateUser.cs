@@ -70,6 +70,7 @@ namespace ParkingCucei
             txtLName.Text = "";
             txtPasswd.Text = "";
             txtBuscar.Text = "";
+            txtNewPasswd.Text = "";
 
             idToWork = "";
         }
@@ -213,38 +214,89 @@ namespace ParkingCucei
         private void updateUser()
         {
             string queryUpdate = "";
+
+            string userCode = txtCode.Text;
+            string userFName = txtFName.Text;
+            string userLName = txtLName.Text;
+            string userEmail = txtEmail.Text;
+            string userNewPass = txtNewPasswd.Text;
+
             if (txtNewPasswd.Text == "") // En caso de que se deje vacio es porque no se cambiara la contraseña, por lo tanto no se necesita la seguridad para el cambio de contraseña
             {
-                string userCode = txtCode.Text;
-                string userFName = txtFName.Text;
-                string userLName = txtLName.Text;
-                string userEmail = txtEmail.Text;
-
                 queryUpdate = "UPDATE users SET id_user = " + userCode + ", fname = '" + userFName + "', lname = '" + userLName + "', email = '" + userEmail + "' WHERE id_user = " + idToWork + ";";
 
-                try
-                {
-                    MySqlConnection con = new MySqlConnection(connectionString);
-
-                    con.Open();
-
-                    MySqlCommand command = new MySqlCommand(queryUpdate, con);
-
-                    MySqlDataReader reader = command.ExecuteReader();
-
-                    con.Close();
-
-                    MessageBox.Show("Se modificó exitosamente el usuario", "Usuario modificado!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                    clearBoxes();
-                }
+                
             }
             else // Verificar que la contraseña previa sea la correcta
             {
+                if (checkCurrentPasswd())
+                {
+                    queryUpdate = "UPDATE users SET id_user = " + userCode + ", fname = '" + userFName + "', lname = '" + userLName + "', email = '" + userEmail + "',  passwd = sha2('" + userNewPass +"', 256) WHERE id_user = " + idToWork + ";";
+                }
+                else
+                {
+                    MessageBox.Show("Contraseña incorrecta, no se permite modificar contraseña incorrecta", "Incorrecto", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            // Ejecutar modificacion de usuario en la base de datos
+            try
+            {
+                MySqlConnection con = new MySqlConnection(connectionString);
 
+                con.Open();
+
+                MySqlCommand command = new MySqlCommand(queryUpdate, con);
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                con.Close();
+
+                MessageBox.Show("Se modificó exitosamente el usuario", "Usuario modificado!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                clearBoxes();
+            }
+
+        }
+
+        private bool checkCurrentPasswd()
+        {
+            string queryCheck = "SELECT id_user FROM users WHERE passwd = sha2('" + txtPasswd.Text + "', 256);";
+            string userCode = "";
+
+            try
+            {
+                MySqlConnection con = new MySqlConnection(connectionString);
+
+                con.Open();
+
+                MySqlCommand command = new MySqlCommand(queryCheck, con);
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        userCode = reader.GetString(0);
+                    }
+
+                    con.Close();
+                    
+                    // Se revisa si el id que se consiguio con la contraseña es el que se esta trabajando
+                    bool isMatch = userCode == idToWork ? true : false;
+                    return isMatch;
+                }
+                con.Close();
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
             }
         }
     }
