@@ -16,6 +16,7 @@ namespace ParkingCucei
     public partial class Login : Form
     {
         private string connectionString = ConfigurationManager.AppSettings.Get("connectionString");
+        private string username = "";
 
         public Login()
         {
@@ -62,7 +63,12 @@ namespace ParkingCucei
                     }
                 case 1:
                     {
-                        lblConfirmation.Text += "\n Bienvenido!";
+                        using (MainScreen newWindow = new MainScreen(username))
+                        {
+                            this.Visible = false;
+                            newWindow.ShowDialog();
+                            this.Close();
+                        }
                         break;
                     }
                 case 2:
@@ -123,7 +129,7 @@ namespace ParkingCucei
                     // Leer lo que se regreso
                     while (reader.Read())
                     {
-                        lblConfirmation.Text = "Se encontro usuario, " + reader.GetString(0);
+                        username = reader.GetString(0);
                     }
                     con.Close();
                     return 1;
