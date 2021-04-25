@@ -4,17 +4,21 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Mail;
+using MySql.Data.MySqlClient;
 
 
 namespace ParkingCucei
 {
     public partial class FPasswd : Form
     {
+        private string connectionString = ConfigurationManager.AppSettings.Get("connectionString");
+
         public FPasswd()
         {
             InitializeComponent();
@@ -22,33 +26,91 @@ namespace ParkingCucei
 
         private void btnFPass_Click(object sender, EventArgs e)
         {
-            String r = RandomString(8);
-            lblCodeRecover.Text = r;
-            // recoverPassword();
+            
+            if (!checkUserID())
+            {
+                MessageBox.Show("El codigo de usuario no existe.", "Codigo incorrecto", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            string newPass = RandomString(8);
+
+            changePasswordDB(newPass);
+            recoverPassword(newPass);
+
+            using(Login newWindow = new Login())
+            {
+                this.Visible = false;
+                newWindow.ShowDialog();
+                this.Close();
+            }
         }
 
-        private void checkUserID()
+        private bool checkUserID()
         {
+            string codeRecover = txtFPass.Text;
+            string queryFetch = "SELECT fname FROM users WHERE id_user='" + codeRecover + "';";
 
+            try
+            {
+                MySqlConnection con = new MySqlConnection(connectionString);
+
+                con.Open();
+
+                MySqlCommand command = new MySqlCommand(queryFetch, con);
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    con.Close();
+                    return true;
+                }
+                
+                return false;
+                           }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
         }
 
-        private void changePasswordDB()
+        private void changePasswordDB(string randomPass)
         {
+            string codeRecover = txtFPass.Text;
+            string queryRecover = "update users set passwd = sha2('" + randomPass + "', 256) where id_user = '" + codeRecover +"';";
+
+            try
+            {
+                MySqlConnection con = new MySqlConnection(connectionString);
+
+                con.Open();
+
+                MySqlCommand command = new MySqlCommand(queryRecover, con);
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
 
-        private void recoverPassword()
+        private void recoverPassword(string newPass)
         {
             string to, from, pass, messageBody;
             MailMessage message = new MailMessage();
             to = "lglvluislopez@gmail.com";
             from = "parkdbcucei@gmail.com";
             pass = "parkdbcu";
-            messageBody = "Para cambiar contraseña";
+            messageBody = "Se creo una contraseña aleatoria para entrar a su cuenta.<br>Su nueva contraseña es <strong>" + newPass + "<strong>";
             message.To.Add(to);
             message.From = new MailAddress(from);
-            message.Body = "From: " + "<br>Messsage: " + messageBody;
-            message.Subject = "Cambio de contraseña";
+            message.Body = "From: " + from + "<br>Messsage: " + messageBody;
+            message.Subject = "Cambio de contraseña parkDB";
             message.IsBodyHtml = true;
             SmtpClient smtp = new SmtpClient("smtp.gmail.com");
             smtp.EnableSsl = true;
@@ -59,7 +121,7 @@ namespace ParkingCucei
             try
             {
                 smtp.Send(message);
-                DialogResult code = MessageBox.Show("Correo enviado exitosamente.", "enviado!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult code = MessageBox.Show("Correo enviado exitosamente.\nVolviendo a pantalla login", "Nueva contraseña lista!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
