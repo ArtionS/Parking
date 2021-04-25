@@ -42,7 +42,9 @@ namespace ParkingCucei
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnBuscarUsuario = new System.Windows.Forms.Button();
+            this.btnEliminarUsuario = new System.Windows.Forms.Button();
+            this.btnGuardarModificacion = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -152,21 +154,44 @@ namespace ParkingCucei
             this.label6.TabIndex = 12;
             this.label6.Text = "Buscar usuario:";
             // 
-            // button2
+            // btnBuscarUsuario
             // 
-            this.button2.Location = new System.Drawing.Point(427, 323);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "Buscar";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnBuscarUsuario.Location = new System.Drawing.Point(422, 312);
+            this.btnBuscarUsuario.Name = "btnBuscarUsuario";
+            this.btnBuscarUsuario.Size = new System.Drawing.Size(91, 44);
+            this.btnBuscarUsuario.TabIndex = 13;
+            this.btnBuscarUsuario.Text = "Buscar";
+            this.btnBuscarUsuario.UseVisualStyleBackColor = true;
+            this.btnBuscarUsuario.Click += new System.EventHandler(this.btnBuscarUsuario_Click);
+            // 
+            // btnEliminarUsuario
+            // 
+            this.btnEliminarUsuario.Enabled = false;
+            this.btnEliminarUsuario.Location = new System.Drawing.Point(607, 140);
+            this.btnEliminarUsuario.Name = "btnEliminarUsuario";
+            this.btnEliminarUsuario.Size = new System.Drawing.Size(98, 46);
+            this.btnEliminarUsuario.TabIndex = 14;
+            this.btnEliminarUsuario.Text = "Eliminar usuario";
+            this.btnEliminarUsuario.UseVisualStyleBackColor = true;
+            // 
+            // btnGuardarModificacion
+            // 
+            this.btnGuardarModificacion.Enabled = false;
+            this.btnGuardarModificacion.Location = new System.Drawing.Point(607, 207);
+            this.btnGuardarModificacion.Name = "btnGuardarModificacion";
+            this.btnGuardarModificacion.Size = new System.Drawing.Size(98, 56);
+            this.btnGuardarModificacion.TabIndex = 15;
+            this.btnGuardarModificacion.Text = "Guardar modificacion de usuario";
+            this.btnGuardarModificacion.UseVisualStyleBackColor = true;
             // 
             // CreateUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnGuardarModificacion);
+            this.Controls.Add(this.btnEliminarUsuario);
+            this.Controls.Add(this.btnBuscarUsuario);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtBuscar);
             this.Controls.Add(this.btnAgregarUsuario);
@@ -202,6 +227,8 @@ namespace ParkingCucei
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnBuscarUsuario;
+        private System.Windows.Forms.Button btnEliminarUsuario;
+        private System.Windows.Forms.Button btnGuardarModificacion;
     }
 }

@@ -70,5 +70,66 @@ namespace ParkingCucei
             txtLName.Text = "";
             txtPasswd.Text = "";
         }
+
+        private void btnBuscarUsuario_Click(object sender, EventArgs e)
+        {
+            if (searhUsersDB())
+            {
+                btnGuardarModificacion.Enabled = true;
+                btnEliminarUsuario.Enabled = true;
+                btnAgregarUsuario.Enabled = false;
+            }
+            else
+            {
+                MessageBox.Show("Usuario no encontrado.", "Codigo no encontrado.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private bool searhUsersDB()
+        {
+            string idToSearch = txtBuscar.Text;
+            string queryFetch = "select fname, lname, email, passwd from users where id_user = " + idToSearch + ";";
+
+            string fName = "", lName = "", email = "";
+
+            try
+            {
+                MySqlConnection con = new MySqlConnection(connectionString);
+
+                con.Open();
+
+                MySqlCommand command = new MySqlCommand(queryFetch, con);
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        fName = reader.GetString(0);
+                        lName = reader.GetString(1);
+                        email = reader.GetString(2);
+                    }
+                    con.Close();
+
+                    txtCode.Text = idToSearch;
+                    txtEmail.Text = email;
+                    txtFName.Text = fName;
+                    txtLName.Text = lName;
+
+                    return true;
+                }
+
+                con.Close();
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+            
+        }
     }
 }
