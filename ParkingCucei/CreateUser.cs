@@ -187,6 +187,7 @@ namespace ParkingCucei
             txtNewPasswd.Visible = false;
             lblNewPasswd.Visible = false;
 
+            lblPasswd.Text = "Contraseña:";
             clearBoxes();
         }
 
@@ -198,6 +199,8 @@ namespace ParkingCucei
             btnCancel.Enabled = true;
             txtNewPasswd.Visible = true;
             lblNewPasswd.Visible = true;
+
+            lblPasswd.Text = "Contraseña actual:";
         }
 
         private void btnGuardarModificacion_Click(object sender, EventArgs e)
@@ -209,6 +212,7 @@ namespace ParkingCucei
 
         private void updateUser()
         {
+            string queryUpdate = "";
             if (txtNewPasswd.Text == "") // En caso de que se deje vacio es porque no se cambiara la contraseña, por lo tanto no se necesita la seguridad para el cambio de contraseña
             {
                 string userCode = txtCode.Text;
@@ -216,7 +220,7 @@ namespace ParkingCucei
                 string userLName = txtLName.Text;
                 string userEmail = txtEmail.Text;
 
-                string queryUpdate = "UPDATE users SET id_user = " + userCode + ", fname = '" + userFName + "', lname = '" + userLName + "', email = '" + userEmail + "' WHERE id_user = " + idToWork + ";";
+                queryUpdate = "UPDATE users SET id_user = " + userCode + ", fname = '" + userFName + "', lname = '" + userLName + "', email = '" + userEmail + "' WHERE id_user = " + idToWork + ";";
 
                 try
                 {
@@ -237,6 +241,10 @@ namespace ParkingCucei
                     MessageBox.Show(ex.Message);
                     clearBoxes();
                 }
+            }
+            else // Verificar que la contraseña previa sea la correcta
+            {
+
             }
         }
     }

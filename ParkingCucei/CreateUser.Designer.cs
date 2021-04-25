@@ -80,7 +80,7 @@ namespace ParkingCucei
             // lblPasswd
             // 
             this.lblPasswd.AutoSize = true;
-            this.lblPasswd.Location = new System.Drawing.Point(323, 82);
+            this.lblPasswd.Location = new System.Drawing.Point(318, 81);
             this.lblPasswd.Name = "lblPasswd";
             this.lblPasswd.Size = new System.Drawing.Size(64, 13);
             this.lblPasswd.TabIndex = 4;
@@ -109,7 +109,7 @@ namespace ParkingCucei
             // 
             // txtPasswd
             // 
-            this.txtPasswd.Location = new System.Drawing.Point(393, 74);
+            this.txtPasswd.Location = new System.Drawing.Point(422, 74);
             this.txtPasswd.Name = "txtPasswd";
             this.txtPasswd.PasswordChar = '*';
             this.txtPasswd.Size = new System.Drawing.Size(135, 20);
@@ -203,7 +203,7 @@ namespace ParkingCucei
             // lblNewPasswd
             // 
             this.lblNewPasswd.AutoSize = true;
-            this.lblNewPasswd.Location = new System.Drawing.Point(289, 131);
+            this.lblNewPasswd.Location = new System.Drawing.Point(318, 131);
             this.lblNewPasswd.Name = "lblNewPasswd";
             this.lblNewPasswd.Size = new System.Drawing.Size(98, 13);
             this.lblNewPasswd.TabIndex = 17;
@@ -212,7 +212,7 @@ namespace ParkingCucei
             // 
             // txtNewPasswd
             // 
-            this.txtNewPasswd.Location = new System.Drawing.Point(393, 131);
+            this.txtNewPasswd.Location = new System.Drawing.Point(422, 131);
             this.txtNewPasswd.Name = "txtNewPasswd";
             this.txtNewPasswd.Size = new System.Drawing.Size(135, 20);
             this.txtNewPasswd.TabIndex = 18;
