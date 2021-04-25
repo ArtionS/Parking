@@ -32,7 +32,7 @@ namespace ParkingCucei
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblPasswd = new System.Windows.Forms.Label();
             this.txtCode = new System.Windows.Forms.TextBox();
             this.txtFName = new System.Windows.Forms.TextBox();
             this.txtLName = new System.Windows.Forms.TextBox();
@@ -45,6 +45,9 @@ namespace ParkingCucei
             this.btnBuscarUsuario = new System.Windows.Forms.Button();
             this.btnEliminarUsuario = new System.Windows.Forms.Button();
             this.btnGuardarModificacion = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtNewPasswd = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -59,7 +62,7 @@ namespace ParkingCucei
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(55, 161);
+            this.label2.Location = new System.Drawing.Point(56, 138);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(77, 13);
             this.label2.TabIndex = 1;
@@ -68,20 +71,20 @@ namespace ParkingCucei
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(39, 237);
+            this.label3.Location = new System.Drawing.Point(40, 197);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(93, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Segundo Nombre:";
             // 
-            // label5
+            // lblPasswd
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(323, 82);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(64, 13);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Contraseña:";
+            this.lblPasswd.AutoSize = true;
+            this.lblPasswd.Location = new System.Drawing.Point(323, 82);
+            this.lblPasswd.Name = "lblPasswd";
+            this.lblPasswd.Size = new System.Drawing.Size(64, 13);
+            this.lblPasswd.TabIndex = 4;
+            this.lblPasswd.Text = "Contraseña:";
             // 
             // txtCode
             // 
@@ -92,14 +95,14 @@ namespace ParkingCucei
             // 
             // txtFName
             // 
-            this.txtFName.Location = new System.Drawing.Point(138, 154);
+            this.txtFName.Location = new System.Drawing.Point(139, 131);
             this.txtFName.Name = "txtFName";
             this.txtFName.Size = new System.Drawing.Size(135, 20);
             this.txtFName.TabIndex = 6;
             // 
             // txtLName
             // 
-            this.txtLName.Location = new System.Drawing.Point(138, 230);
+            this.txtLName.Location = new System.Drawing.Point(139, 190);
             this.txtLName.Name = "txtLName";
             this.txtLName.Size = new System.Drawing.Size(135, 20);
             this.txtLName.TabIndex = 7;
@@ -125,7 +128,7 @@ namespace ParkingCucei
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(350, 161);
+            this.label4.Location = new System.Drawing.Point(97, 250);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(35, 13);
             this.label4.TabIndex = 3;
@@ -133,7 +136,7 @@ namespace ParkingCucei
             // 
             // txtEmail
             // 
-            this.txtEmail.Location = new System.Drawing.Point(392, 154);
+            this.txtEmail.Location = new System.Drawing.Point(139, 243);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(135, 20);
             this.txtEmail.TabIndex = 8;
@@ -173,6 +176,7 @@ namespace ParkingCucei
             this.btnEliminarUsuario.TabIndex = 14;
             this.btnEliminarUsuario.Text = "Eliminar usuario";
             this.btnEliminarUsuario.UseVisualStyleBackColor = true;
+            this.btnEliminarUsuario.Click += new System.EventHandler(this.btnEliminarUsuario_Click);
             // 
             // btnGuardarModificacion
             // 
@@ -184,11 +188,41 @@ namespace ParkingCucei
             this.btnGuardarModificacion.Text = "Guardar modificacion de usuario";
             this.btnGuardarModificacion.UseVisualStyleBackColor = true;
             // 
+            // btnCancel
+            // 
+            this.btnCancel.Enabled = false;
+            this.btnCancel.Location = new System.Drawing.Point(607, 312);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(98, 44);
+            this.btnCancel.TabIndex = 16;
+            this.btnCancel.Text = "Cancelar";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(289, 131);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(98, 13);
+            this.label7.TabIndex = 17;
+            this.label7.Text = "Nueva contraseña:";
+            // 
+            // txtNewPasswd
+            // 
+            this.txtNewPasswd.Location = new System.Drawing.Point(393, 131);
+            this.txtNewPasswd.Name = "txtNewPasswd";
+            this.txtNewPasswd.Size = new System.Drawing.Size(135, 20);
+            this.txtNewPasswd.TabIndex = 18;
+            // 
             // CreateUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.txtNewPasswd);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnGuardarModificacion);
             this.Controls.Add(this.btnEliminarUsuario);
             this.Controls.Add(this.btnBuscarUsuario);
@@ -200,7 +234,7 @@ namespace ParkingCucei
             this.Controls.Add(this.txtLName);
             this.Controls.Add(this.txtFName);
             this.Controls.Add(this.txtCode);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.lblPasswd);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -217,7 +251,7 @@ namespace ParkingCucei
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblPasswd;
         private System.Windows.Forms.TextBox txtCode;
         private System.Windows.Forms.TextBox txtFName;
         private System.Windows.Forms.TextBox txtLName;
@@ -230,5 +264,8 @@ namespace ParkingCucei
         private System.Windows.Forms.Button btnBuscarUsuario;
         private System.Windows.Forms.Button btnEliminarUsuario;
         private System.Windows.Forms.Button btnGuardarModificacion;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtNewPasswd;
     }
 }

@@ -15,7 +15,7 @@ namespace ParkingCucei
     public partial class CreateUser : Form
     {
         private string connectionString = ConfigurationManager.AppSettings.Get("connectionString");
-
+        private string idToWork = "";
         public CreateUser()
         {
             InitializeComponent();
@@ -69,15 +69,16 @@ namespace ParkingCucei
             txtFName.Text = "";
             txtLName.Text = "";
             txtPasswd.Text = "";
+            txtBuscar.Text = "";
+
+            idToWork = "";
         }
 
         private void btnBuscarUsuario_Click(object sender, EventArgs e)
         {
             if (searhUsersDB())
             {
-                btnGuardarModificacion.Enabled = true;
-                btnEliminarUsuario.Enabled = true;
-                btnAgregarUsuario.Enabled = false;
+                switchButtonsToSearch();
             }
             else
             {
@@ -87,8 +88,8 @@ namespace ParkingCucei
 
         private bool searhUsersDB()
         {
-            string idToSearch = txtBuscar.Text;
-            string queryFetch = "select fname, lname, email, passwd from users where id_user = " + idToSearch + ";";
+            idToWork = txtBuscar.Text;
+            string queryFetch = "select fname, lname, email, passwd from users where id_user = " + idToWork + ";";
 
             string fName = "", lName = "", email = "";
 
@@ -112,7 +113,7 @@ namespace ParkingCucei
                     }
                     con.Close();
 
-                    txtCode.Text = idToSearch;
+                    txtCode.Text = idToWork;
                     txtEmail.Text = email;
                     txtFName.Text = fName;
                     txtLName.Text = lName;
@@ -121,15 +122,78 @@ namespace ParkingCucei
                 }
 
                 con.Close();
-
+                idToWork = "";
                 return false;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                idToWork = "";
                 return false;
             }
             
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            switchButtonsToAdd();
+        }
+
+        private void btnEliminarUsuario_Click(object sender, EventArgs e)
+        {
+            deleteUser();
+            clearBoxes();
+            switchButtonsToAdd();
+        }
+
+        private void deleteUser()
+        {
+            Console.WriteLine(idToWork);
+            if (idToWork != "")
+            {
+                string queryDel = "DELETE FROM users WHERE id_user = " + idToWork + ";";
+
+                try
+                {
+                    MySqlConnection con = new MySqlConnection(connectionString);
+
+                    con.Open();
+
+                    MySqlCommand command = new MySqlCommand(queryDel, con);
+
+                    MySqlDataReader reader = command.ExecuteReader();
+
+                    con.Close();
+                    
+                    MessageBox.Show("Se eliminó exitosamente el usuario", "Usuario eliminado!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Problemas al encontrar el identificador del usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void switchButtonsToAdd()
+        {
+            btnGuardarModificacion.Enabled = false;
+            btnEliminarUsuario.Enabled = false;
+            btnAgregarUsuario.Enabled = true;
+            btnCancel.Enabled = false;
+
+            clearBoxes();
+        }
+
+        private void switchButtonsToSearch()
+        {
+            btnGuardarModificacion.Enabled = true;
+            btnEliminarUsuario.Enabled = true;
+            btnAgregarUsuario.Enabled = false;
+            btnCancel.Enabled = true;
         }
     }
 }
