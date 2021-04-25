@@ -148,5 +148,15 @@ namespace ParkingCucei
                 this.Close();
             }
         }
+
+        private void lblCreate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            using (CreateUser newWindow = new CreateUser())
+            {
+                this.Visible = false;
+                newWindow.ShowDialog();
+                this.Close();
+            }
+        }
     }
 }

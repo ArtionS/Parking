@@ -37,6 +37,7 @@ namespace ParkingCucei
             this.btnLogin = new System.Windows.Forms.Button();
             this.lblConfirmation = new System.Windows.Forms.Label();
             this.lblFPass = new System.Windows.Forms.Label();
+            this.lblCreate = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // label1
@@ -110,11 +111,23 @@ namespace ParkingCucei
             this.lblFPass.Text = "Restablecer contraseña";
             this.lblFPass.Click += new System.EventHandler(this.lblFPass_Click);
             // 
+            // lblCreate
+            // 
+            this.lblCreate.AutoSize = true;
+            this.lblCreate.Location = new System.Drawing.Point(215, 258);
+            this.lblCreate.Name = "lblCreate";
+            this.lblCreate.Size = new System.Drawing.Size(68, 13);
+            this.lblCreate.TabIndex = 8;
+            this.lblCreate.TabStop = true;
+            this.lblCreate.Text = "Crear cuenta";
+            this.lblCreate.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblCreate_LinkClicked);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblCreate);
             this.Controls.Add(this.lblFPass);
             this.Controls.Add(this.lblConfirmation);
             this.Controls.Add(this.btnLogin);
@@ -141,6 +154,7 @@ namespace ParkingCucei
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Label lblConfirmation;
         private System.Windows.Forms.Label lblFPass;
+        private System.Windows.Forms.LinkLabel lblCreate;
     }
 }
 
