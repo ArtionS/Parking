@@ -18,6 +18,8 @@ namespace ParkingCucei
     public partial class FPasswd : Form
     {
         private string connectionString = ConfigurationManager.AppSettings.Get("connectionString");
+        private string senderMail = ConfigurationManager.AppSettings.Get("senderMail");
+        private string passSender = ConfigurationManager.AppSettings.Get("pass");
 
         public FPasswd()
         {
@@ -26,29 +28,40 @@ namespace ParkingCucei
 
         private void btnFPass_Click(object sender, EventArgs e)
         {
+            // Se revisa si el usuario existe y en caso de que si se guarda en la variable mail recover
+            string mailRecover = checkUserID();   
             
-            if (!checkUserID())
+            // En caso de que no exista el usuario la cadena se encontrara vacia
+            if (mailRecover == "")
             {
                 MessageBox.Show("El codigo de usuario no existe.", "Codigo incorrecto", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
             }
-            string newPass = RandomString(8);
-
-            changePasswordDB(newPass);
-            recoverPassword(newPass);
-
-            using(Login newWindow = new Login())
+            else
             {
-                this.Visible = false;
-                newWindow.ShowDialog();
-                this.Close();
+                // Se genera una contraseña nueva y se guarda en la variable newpass
+                string newPass = RandomString(8);
+                
+                // Cambia la contraseña dentro de la base de datos
+                changePasswordDB(newPass);
+                // Manda un correo con la nueva contraseña y al destinatario que este registrado dentro de ese usuario
+                recoverPassword(newPass, mailRecover);
+
+                // Cierra la ventana para volver al login
+                using(Login newWindow = new Login())
+                {
+                    this.Visible = false;
+                    newWindow.ShowDialog();
+                    this.Close();
+                }
+
             }
         }
 
-        private bool checkUserID()
+        private string checkUserID()
         {
             string codeRecover = txtFPass.Text;
-            string queryFetch = "SELECT fname FROM users WHERE id_user='" + codeRecover + "';";
+            string queryFetch = "SELECT email FROM users WHERE id_user='" + codeRecover + "';";
+            string mailRecover = "";
 
             try
             {
@@ -62,16 +75,20 @@ namespace ParkingCucei
 
                 if (reader.HasRows)
                 {
+                    while (reader.Read())
+                    {
+                        mailRecover = reader.GetString(0);
+                    }
                     con.Close();
-                    return true;
+                    return mailRecover;
                 }
                 
-                return false;
+                return "";
                            }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                return false;
+                return "";
             }
         }
 
@@ -99,13 +116,13 @@ namespace ParkingCucei
 
         }
 
-        private void recoverPassword(string newPass)
+        private void recoverPassword(string newPass, string userMail)
         {
             string to, from, pass, messageBody;
             MailMessage message = new MailMessage();
-            to = "lglvluislopez@gmail.com";
-            from = "parkdbcucei@gmail.com";
-            pass = "parkdbcu";
+            to = userMail;
+            from = senderMail;
+            pass = passSender;
             messageBody = "Se creo una contraseña aleatoria para entrar a su cuenta.<br>Su nueva contraseña es <strong>" + newPass + "<strong>";
             message.To.Add(to);
             message.From = new MailAddress(from);
