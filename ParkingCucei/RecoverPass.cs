@@ -123,10 +123,10 @@ namespace ParkingCucei
             to = userMail;
             from = senderMail;
             pass = passSender;
-            messageBody = "Se creo una contraseña aleatoria para entrar a su cuenta.<br>Su nueva contraseña es <strong>" + newPass + "<strong>";
+            messageBody = "Se creo una contraseña aleatoria para entrar a su cuenta.<br>";
             message.To.Add(to);
             message.From = new MailAddress(from);
-            message.Body = "From: " + from + "<br>Messsage: " + messageBody;
+            message.Body = "<img src=\"https://raw.githubusercontent.com/ROALOCH/cucei-park-db/master/src/Resources/emailHeader.png \" /><br><h1 style=font-family: Arial, Helvetica, sans-serif; font-size: 30px; padding-left: 300px; <strong>" + newPass + "</strong></h1>";
             message.Subject = "Cambio de contraseña parkDB";
             message.IsBodyHtml = true;
             SmtpClient smtp = new SmtpClient("smtp.gmail.com");
