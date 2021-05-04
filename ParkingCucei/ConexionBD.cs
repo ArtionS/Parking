@@ -20,10 +20,10 @@ namespace ParkingCucei
             try
             {
                 con = new MySqlConnection(connectionString);
-                con.Open();
+                this.OpenConnection();
 
                 connected = con.State == ConnectionState.Open ? true : false;
-                
+                this.CloseConnection();
             }
             catch (Exception ex)
             {
@@ -64,34 +64,40 @@ namespace ParkingCucei
             }
         }
 
-        public void Insert(string queryInsert)
+        public bool Insert(string queryInsert)
         {
             if (this.OpenConnection() == true)
             {
                 MySqlCommand cmd = new MySqlCommand(queryInsert, con);
                 cmd.ExecuteNonQuery(); // Revisar por si acaso
                 this.CloseConnection();
+                return true;
             }
+            return false;
         }
 
-        public void Update(string queryUpdate)
+        public bool Update(string queryUpdate)
         {
             if (this.OpenConnection() == true)
             {
                 MySqlCommand cmd = new MySqlCommand(queryUpdate, con);
                 cmd.ExecuteNonQuery();
                 this.CloseConnection();
+                return true;
             }
+            return false;
         }
 
-        public void Delete(string queryDelete)
+        public bool Delete(string queryDelete)
         {
             if (this.OpenConnection() == true)
             {
                 MySqlCommand cmd = new MySqlCommand(queryDelete, con);
                 cmd.ExecuteNonQuery();
                 this.CloseConnection();
+                return true;
             }
+            return false;
         }
 
         public string SelectOne(string querySelect)

@@ -20,10 +20,12 @@ namespace ParkingCucei
         private string connectionString = ConfigurationManager.AppSettings.Get("connectionString");
         private string senderMail = ConfigurationManager.AppSettings.Get("senderMail");
         private string passSender = ConfigurationManager.AppSettings.Get("pass");
+        ConexionBD bd = null;
 
         public FPasswd()
         {
             InitializeComponent();
+            bd = new ConexionBD();
         }
 
         private void btnFPass_Click(object sender, EventArgs e)
@@ -40,12 +42,17 @@ namespace ParkingCucei
             {
                 // Se genera una contraseña nueva y se guarda en la variable newpass
                 string newPass = RandomString(8);
-                
-                // Cambia la contraseña dentro de la base de datos
-                changePasswordDB(newPass);
-                // Manda un correo con la nueva contraseña y al destinatario que este registrado dentro de ese usuario
-                recoverPassword(newPass, mailRecover);
 
+                // Cambia la contraseña dentro de la base de datos
+                if (changePasswordDB(newPass))
+                {
+                    // Manda un correo con la nueva contraseña y al destinatario que este registrado dentro de ese usuario
+                    recoverPassword(newPass, mailRecover);
+                }
+                else
+                {
+                    MessageBox.Show("Error al cambiar la contraseña en base de datos", "Error al actualizar contraseña",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 // Cierra la ventana para volver al login
                 using(Login newWindow = new Login())
                 {
@@ -63,67 +70,27 @@ namespace ParkingCucei
             string queryFetch = "SELECT email FROM users WHERE id_user='" + codeRecover + "';";
             string mailRecover = "";
 
-            try
-            {
-                MySqlConnection con = new MySqlConnection(connectionString);
-
-                con.Open();
-
-                MySqlCommand command = new MySqlCommand(queryFetch, con);
-
-                MySqlDataReader reader = command.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        mailRecover = reader.GetString(0);
-                    }
-                    con.Close();
-                    return mailRecover;
-                }
-                
-                return "";
-                           }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return "";
-            }
+            return mailRecover = bd.SelectOne(queryFetch);
         }
 
-        private void changePasswordDB(string randomPass)
+        private bool changePasswordDB(string randomPass)
         {
             string codeRecover = txtFPass.Text;
             string queryRecover = "update users set passwd = sha2('" + randomPass + "', 256) where id_user = '" + codeRecover +"';";
 
-            try
-            {
-                MySqlConnection con = new MySqlConnection(connectionString);
-
-                con.Open();
-
-                MySqlCommand command = new MySqlCommand(queryRecover, con);
-
-                MySqlDataReader reader = command.ExecuteReader();
-
-                con.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
+            if (bd.Update(queryRecover))
+                return true;
+            else
+                return false;
         }
 
         private void recoverPassword(string newPass, string userMail)
         {
-            string to, from, pass, messageBody;
+            string to, from, pass;
             MailMessage message = new MailMessage();
             to = userMail;
             from = senderMail;
             pass = passSender;
-            messageBody = "Se creo una contraseña aleatoria para entrar a su cuenta.<br>";
             message.To.Add(to);
             message.From = new MailAddress(from);
             message.Body = "<img src=\"https://raw.githubusercontent.com/ROALOCH/cucei-park-db/master/src/Resources/emailHeader.png \" /><br><h1 style=font-family: Arial, Helvetica, sans-serif; font-size: 30px; padding-left: 300px; <strong>" + newPass + "</strong></h1>";
