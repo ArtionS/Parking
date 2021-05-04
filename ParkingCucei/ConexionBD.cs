@@ -143,6 +143,10 @@ namespace ParkingCucei
             }
         }
 
+        /*
+        Para hacer select de multiples columnas y retornar listas es necesario que
+        dentro del query se pidan las mismas columnas que en los argumentos
+        */
         public List<string>[] Select(string queryFetch, string column1, string column2, string column3, string column4)
         {
             List<string>[] list = new List<string>[4];
