@@ -25,29 +25,18 @@ namespace ParkingCucei
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            try
+            ConexionBD bd = new ConexionBD();
+            if (bd.GetConnectionState())
             {
-                MySqlConnection con = new MySqlConnection(connectionString);
-                con.Open();
-                
-                if(con.State == ConnectionState.Open)
-                {
-                    label1.Text = "conectado";
-                    label1.ForeColor = Color.Green;
-                }
-                else
-                {
-                    label1.Text = "No conectado";
-                    label1.ForeColor = Color.Red;
-                }
-
-
+                label1.Text = "conectado";
+                label1.ForeColor = Color.Green;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                label1.Text = "No conectado";
+                label1.ForeColor = Color.Red;
             }
-
+            
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
