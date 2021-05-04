@@ -89,6 +89,7 @@ namespace ParkingCucei
 
             string fName = "", lName = "", email = "";
 
+            // Se mantendra este acceso a la base de datos debido a que es muy especifica para este caso y el cambio a la conexion bd generaria lo mismo
             try
             {
                 MySqlConnection con = new MySqlConnection(connectionString);
