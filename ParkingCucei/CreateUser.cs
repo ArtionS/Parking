@@ -16,9 +16,12 @@ namespace ParkingCucei
     {
         private string connectionString = ConfigurationManager.AppSettings.Get("connectionString");
         private string idToWork = "";
+        ConexionBD bd = null;
+
         public CreateUser()
         {
             InitializeComponent();
+            bd = new ConexionBD();
         }
 
         private void btnAgregarUsuario_Click(object sender, EventArgs e)
@@ -44,23 +47,15 @@ namespace ParkingCucei
 
             string queryAdd = "INSERT INTO users (id_user, fname, lname, email, passwd) values(" + userCode + ", '" + userFName + "', '" + userLName + "', '" + userEmail + "', sha2('" + userPasswd +"', 256));" ;
 
-            try
+            if (bd.Insert(queryAdd))
             {
-                MySqlConnection con = new MySqlConnection(connectionString);
-
-                con.Open();
-
-                MySqlCommand command = new MySqlCommand(queryAdd, con);
-
-                MySqlDataReader reader = command.ExecuteReader();
-
-                con.Close();
                 MessageBox.Show("Se agregó exitosamente el usuario", "Usuario agregado!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Ocurrio un problema al insertar el usuario", "Error al agregar", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            
         }
         private void clearBoxes()
         {
@@ -90,49 +85,32 @@ namespace ParkingCucei
         private bool searhUsersDB()
         {
             idToWork = txtBuscar.Text;
-            string queryFetch = "select fname, lname, email, passwd from users where id_user = " + idToWork + ";";
+            string queryFetch = "select id_user, fname, lname, email, passwd from users where id_user = " + idToWork + ";";
 
             string fName = "", lName = "", email = "";
 
-            try
+            List<string>[] dataList = new List<string>[3];
+
+            dataList = bd.Select(queryFetch, "id_user", "fName", "lName", "email" );
+
+            if (dataList[0].Count <= 0)
             {
-                MySqlConnection con = new MySqlConnection(connectionString);
-
-                con.Open();
-
-                MySqlCommand command = new MySqlCommand(queryFetch, con);
-
-                MySqlDataReader reader = command.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        fName = reader.GetString(0);
-                        lName = reader.GetString(1);
-                        email = reader.GetString(2);
-                    }
-                    con.Close();
-
-                    txtCode.Text = idToWork;
-                    txtEmail.Text = email;
-                    txtFName.Text = fName;
-                    txtLName.Text = lName;
-
-                    return true;
-                }
-
-                con.Close();
                 idToWork = "";
                 return false;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
-                idToWork = "";
-                return false;
+                fName = (string)dataList[1].ToArray().GetValue(0);
+                lName = (string)dataList[2].ToArray().GetValue(0);
+                email = (string)dataList[3].ToArray().GetValue(0);
+
+                txtCode.Text = idToWork;
+                txtEmail.Text = email;
+                txtFName.Text = fName;
+                txtLName.Text = lName;
+
+                return true;
             }
-            
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -154,24 +132,10 @@ namespace ParkingCucei
             {
                 string queryDel = "DELETE FROM users WHERE id_user = " + idToWork + ";";
 
-                try
-                {
-                    MySqlConnection con = new MySqlConnection(connectionString);
-
-                    con.Open();
-
-                    MySqlCommand command = new MySqlCommand(queryDel, con);
-
-                    MySqlDataReader reader = command.ExecuteReader();
-
-                    con.Close();
-                    
+                if (bd.Delete(queryDel))
                     MessageBox.Show("Se eliminó exitosamente el usuario", "Usuario eliminado!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                else
+                    MessageBox.Show("Error al eliminar el usuario", "Error al eliminar", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -224,8 +188,6 @@ namespace ParkingCucei
             if (txtNewPasswd.Text == "") // En caso de que se deje vacio es porque no se cambiara la contraseña, por lo tanto no se necesita la seguridad para el cambio de contraseña
             {
                 queryUpdate = "UPDATE users SET id_user = " + userCode + ", fname = '" + userFName + "', lname = '" + userLName + "', email = '" + userEmail + "' WHERE id_user = " + idToWork + ";";
-
-                
             }
             else // Verificar que la contraseña previa sea la correcta
             {
@@ -235,31 +197,17 @@ namespace ParkingCucei
                 }
                 else
                 {
-                    MessageBox.Show("Contraseña incorrecta, no se permite modificar contraseña incorrecta", "Incorrecto", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Contraseña incorrecta, no se permite modificar contraseña si la actual no es correcta", "Incorrecto", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
             // Ejecutar modificacion de usuario en la base de datos
-            try
-            {
-                MySqlConnection con = new MySqlConnection(connectionString);
 
-                con.Open();
-
-                MySqlCommand command = new MySqlCommand(queryUpdate, con);
-
-                MySqlDataReader reader = command.ExecuteReader();
-
-                con.Close();
-
+            if (bd.Update(queryUpdate))
                 MessageBox.Show("Se modificó exitosamente el usuario", "Usuario modificado!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                clearBoxes();
-            }
-
+            else
+                MessageBox.Show("Error al modifcar el usuario", "Error al modificar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            
         }
 
         private bool checkCurrentPasswd()
@@ -267,37 +215,15 @@ namespace ParkingCucei
             string queryCheck = "SELECT id_user FROM users WHERE passwd = sha2('" + txtPasswd.Text + "', 256);";
             string userCode = "";
 
-            try
+            userCode = bd.SelectOne(queryCheck);
+
+            if (userCode != "")
             {
-                MySqlConnection con = new MySqlConnection(connectionString);
-
-                con.Open();
-
-                MySqlCommand command = new MySqlCommand(queryCheck, con);
-
-                MySqlDataReader reader = command.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        userCode = reader.GetString(0);
-                    }
-
-                    con.Close();
-                    
-                    // Se revisa si el id que se consiguio con la contraseña es el que se esta trabajando
-                    bool isMatch = userCode == idToWork ? true : false;
-                    return isMatch;
-                }
-                con.Close();
-                return false;
+                // Se revisa si el id que se consiguio con la contraseña es el que se esta trabajando
+                bool isMatch = userCode == idToWork ? true : false;
+                return isMatch;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return false;
-            }
+            return false;
         }
     }
 }

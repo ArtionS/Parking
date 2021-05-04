@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConexionBD.cs" />
     <Compile Include="CreateUser.cs">
       <SubType>Form</SubType>
     </Compile>

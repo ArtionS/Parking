@@ -17,6 +17,7 @@ namespace ParkingCucei
     {
         private string connectionString = ConfigurationManager.AppSettings.Get("connectionString");
         private string username = "";
+        ConexionBD bd = null;
 
         public Login()
         {
@@ -25,29 +26,18 @@ namespace ParkingCucei
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            try
+            bd = new ConexionBD();
+            if (bd.GetConnectionState())
             {
-                MySqlConnection con = new MySqlConnection(connectionString);
-                con.Open();
-                
-                if(con.State == ConnectionState.Open)
-                {
-                    label1.Text = "conectado";
-                    label1.ForeColor = Color.Green;
-                }
-                else
-                {
-                    label1.Text = "No conectado";
-                    label1.ForeColor = Color.Red;
-                }
-
-
+                label1.Text = "conectado";
+                label1.ForeColor = Color.Green;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
+                label1.Text = "No conectado";
+                label1.ForeColor = Color.Red;
             }
-
+            
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -108,41 +98,12 @@ namespace ParkingCucei
             // Crear query para que utilice los datos ingresados y solo regresa el nombre del  usuario
             string queryFetch = "SELECT fname FROM users WHERE (id_user='" + code + "'AND passwd=sha2('" + password + "', 256))";
 
-
-            try
-            {
-                // Crear conexion
-                MySqlConnection con = new MySqlConnection(connectionString);
-
-                // Abrir conexion
-                con.Open();
-
-                // Crear objeto comando con el query y la conexion
-                MySqlCommand command = new MySqlCommand(queryFetch, con);
-
-                // Crear objeto reader para guardar el resultado de la ejecucion del comando
-                MySqlDataReader reader = command.ExecuteReader();
-
-                // Revisar si se retorno algo
-                if (reader.HasRows)
-                {
-                    // Leer lo que se regreso
-                    while (reader.Read())
-                    {
-                        username = reader.GetString(0);
-                    }
-                    con.Close();
-                    return 1;
-                }
-                
-                // Cerrar la conexion
-                con.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            return 0;
+            username = bd.SelectOne(queryFetch);
+            if (username != "")
+                return 1;
+            else
+                return 0;
+            
         }
 
         private void lblFPass_Click(object sender, EventArgs e)
