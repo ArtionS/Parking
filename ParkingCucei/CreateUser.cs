@@ -85,50 +85,32 @@ namespace ParkingCucei
         private bool searhUsersDB()
         {
             idToWork = txtBuscar.Text;
-            string queryFetch = "select fname, lname, email, passwd from users where id_user = " + idToWork + ";";
+            string queryFetch = "select id_user, fname, lname, email, passwd from users where id_user = " + idToWork + ";";
 
             string fName = "", lName = "", email = "";
 
-            // Se mantendra este acceso a la base de datos debido a que es muy especifica para este caso y el cambio a la conexion bd generaria lo mismo
-            try
+            List<string>[] dataList = new List<string>[3];
+
+            dataList = bd.Select(queryFetch, "id_user", "fName", "lName", "email" );
+
+            if (dataList[0].Count <= 0)
             {
-                MySqlConnection con = new MySqlConnection(connectionString);
-
-                con.Open();
-
-                MySqlCommand command = new MySqlCommand(queryFetch, con);
-
-                MySqlDataReader reader = command.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        fName = reader.GetString(0);
-                        lName = reader.GetString(1);
-                        email = reader.GetString(2);
-                    }
-                    con.Close();
-
-                    txtCode.Text = idToWork;
-                    txtEmail.Text = email;
-                    txtFName.Text = fName;
-                    txtLName.Text = lName;
-
-                    return true;
-                }
-
-                con.Close();
                 idToWork = "";
                 return false;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
-                idToWork = "";
-                return false;
+                fName = (string)dataList[1].ToArray().GetValue(0);
+                lName = (string)dataList[2].ToArray().GetValue(0);
+                email = (string)dataList[3].ToArray().GetValue(0);
+
+                txtCode.Text = idToWork;
+                txtEmail.Text = email;
+                txtFName.Text = fName;
+                txtLName.Text = lName;
+
+                return true;
             }
-            
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

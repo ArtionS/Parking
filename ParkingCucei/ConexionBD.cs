@@ -143,5 +143,35 @@ namespace ParkingCucei
             }
         }
 
+        public List<string>[] Select(string queryFetch, string column1, string column2, string column3, string column4)
+        {
+            List<string>[] list = new List<string>[4];
+            list[0] = new List<string>();
+            list[1] = new List<string>();
+            list[2] = new List<string>();
+            list[3] = new List<string>();
+            
+            if (this.OpenConnection() == true)
+            {
+                MySqlCommand cmd = new MySqlCommand(queryFetch, con);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    list[0].Add(dataReader[column1] + "");
+                    list[1].Add(dataReader[column2] + "");
+                    list[2].Add(dataReader[column3] + "");
+                    list[3].Add(dataReader[column4] + "");
+                }
+                dataReader.Close();
+
+                this.CloseConnection();
+
+                return list;
+            }
+
+            return list;
+        }
+
     }
 }
