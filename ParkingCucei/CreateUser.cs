@@ -225,5 +225,15 @@ namespace ParkingCucei
             }
             return false;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            using (Login newWindow = new Login())
+            {
+                this.Visible = false;
+                newWindow.ShowDialog();
+                this.Close();
+            }
+        }
     }
 }
