@@ -148,5 +148,15 @@ namespace ParkingCucei
                 return false;
             }
         }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            using (Login newWindow = new Login())
+            {
+                this.Visible = false;
+                newWindow.ShowDialog();
+                this.Close();
+            }
+        }
     }
 }

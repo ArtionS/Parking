@@ -17,9 +17,17 @@ namespace ParkingCucei
         {
             InitializeComponent();
             currentUser = userName;
-            lblWelcome.Text = currentUser;
+            lblWelcome.Text = "Bienvenido! " + currentUser;
         }
 
-        
+        private void btnVolverLogin_Click(object sender, EventArgs e)
+        {
+            using (Login newWindow = new Login())
+            {
+                this.Visible = false;
+                newWindow.ShowDialog();
+                this.Close();
+            }
+        }
     }
 }
