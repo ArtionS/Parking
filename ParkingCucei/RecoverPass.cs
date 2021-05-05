@@ -31,8 +31,8 @@ namespace ParkingCucei
         private void btnFPass_Click(object sender, EventArgs e)
         {
             // Se revisa si el usuario existe y en caso de que si se guarda en la variable mail recover
-            string mailRecover = checkUserID();   
-            
+            string mailRecover = checkUserID();
+
             // En caso de que no exista el usuario la cadena se encontrara vacia
             if (mailRecover == "")
             {
@@ -43,18 +43,25 @@ namespace ParkingCucei
                 // Se genera una contraseña nueva y se guarda en la variable newpass
                 string newPass = RandomString(8);
 
-                // Cambia la contraseña dentro de la base de datos
-                if (changePasswordDB(newPass))
+                if (checkInternetConnection())
                 {
-                    // Manda un correo con la nueva contraseña y al destinatario que este registrado dentro de ese usuario
-                    recoverPassword(newPass, mailRecover);
+                    // Cambia la contraseña dentro de la base de datos
+                    if (changePasswordDB(newPass))
+                    {
+                        // Manda un correo con la nueva contraseña y al destinatario que este registrado dentro de ese usuario
+                        recoverPassword(newPass, mailRecover);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error al cambiar la contraseña en base de datos", "Error al actualizar contraseña", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Error al cambiar la contraseña en base de datos", "Error al actualizar contraseña",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("No se pudo establecer la conexión a internet.", "Error al conectar con red", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 // Cierra la ventana para volver al login
-                using(Login newWindow = new Login())
+                using (Login newWindow = new Login())
                 {
                     this.Visible = false;
                     newWindow.ShowDialog();
@@ -76,7 +83,7 @@ namespace ParkingCucei
         private bool changePasswordDB(string randomPass)
         {
             string codeRecover = txtFPass.Text;
-            string queryRecover = "update users set passwd = sha2('" + randomPass + "', 256) where id_user = '" + codeRecover +"';";
+            string queryRecover = "update users set passwd = sha2('" + randomPass + "', 256) where id_user = '" + codeRecover + "';";
 
             if (bd.Update(queryRecover))
                 return true;
@@ -125,6 +132,21 @@ namespace ParkingCucei
             }
 
             return builder.ToString();
+        }
+        private bool checkInternetConnection()
+        {
+            try
+            {
+                using (var client = new WebClient())
+                using (client.OpenRead("http://google.com/generate_204"))
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
