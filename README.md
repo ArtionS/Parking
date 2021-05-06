@@ -1,16 +1,23 @@
-# Proyecto Final: parkDB
+# Proyecto: parkDB (Mantinimiento)
 
-Ochoa Herrera Rodrigo Alejandro  
+López Luis  
+Martinez Lizeth  
+Soriano David  
 CUCEI | Universidad de Guadalajara  
-I5891 - Seminario de Bases de Datos
+I5900 - Ingenieria de software II
 
 ### Descripción
 
-Este repositorio contiene el proyecto final para la materia de Seminario de Bases de Datos. parkDB es un administrador de estacionamientos, con funcionalidades básicas como:
+Para este proyecto se decidio realizar una reingenieria completa debido a que contaba con multiples problemas al momento de ejecutarse, ya que este no lograba ejecutarse de manera correcta o no lograba compilar.
 
-- Autenticación y Autorización de Usuarios
-- Generación de Tickets
-- Administración de Empleados y Estacionamientos
+La versión que se esta realizando cuenta con:
+
+- Autenticación de Usuarios
+- Generación de Tickets (En proceso)
+- Administración de Empleados y Estacionamientos (En proceso)
+- Recuperación de contraseñas.
+
+(Lista de configuraciones no actualizada a la version actual)
 
 ### Configuración
 
