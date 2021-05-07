@@ -12,12 +12,13 @@ namespace ParkingCucei
 {
     public partial class MainScreen : Form
     {
-        string currentUser = "";
-        public MainScreen(string userName)
+        string currentUserID = "";
+
+        public MainScreen(string idUser)
         {
             InitializeComponent();
-            currentUser = userName;
-            lblWelcome.Text = "Bienvenido! " + currentUser;
+            currentUserID = idUser;
+            lblCode.Text = "Bienvenido! " + currentUserID;
         }
 
         private void btnVolverLogin_Click(object sender, EventArgs e)
@@ -28,6 +29,41 @@ namespace ParkingCucei
                 newWindow.ShowDialog();
                 this.Close();
             }
+        }
+
+        private void btnMyCars_Click(object sender, EventArgs e)
+        {
+            using (show_cars newWindow = new show_cars(currentUserID))
+            {
+                this.Visible = false;
+                newWindow.ShowDialog();
+                this.Close();
+            }
+        }
+
+        private void btnHistory_Click(object sender, EventArgs e)
+        {
+            using (Tickets newWindow = new Tickets(currentUserID))
+            {
+                this.Visible = false;
+                newWindow.ShowDialog();
+                this.Close();
+            }
+        }
+
+        private void btnViewParking_Click(object sender, EventArgs e)
+        {
+            using (Parkings newWindow = new Parkings(currentUserID))
+            {
+                this.Visible = false;
+                newWindow.ShowDialog();
+                this.Close();
+            }
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

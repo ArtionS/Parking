@@ -83,6 +83,7 @@ namespace ParkingCucei
             this.btnBackTickets.TabIndex = 2;
             this.btnBackTickets.Text = "Volver";
             this.btnBackTickets.UseVisualStyleBackColor = true;
+            this.btnBackTickets.Click += new System.EventHandler(this.btnBackTickets_Click);
             // 
             // Tickets
             // 

@@ -12,9 +12,21 @@ namespace ParkingCucei
 {
     public partial class Parkings : Form
     {
-        public Parkings()
+        private string idUser = "";
+        public Parkings(string id)
         {
             InitializeComponent();
+            idUser = id;
+        }
+
+        private void btnBackParking_Click(object sender, EventArgs e)
+        {
+            using (MainScreen newWindow = new MainScreen(idUser))
+            {
+                this.Visible = false;
+                newWindow.ShowDialog();
+                this.Close();
+            }
         }
     }
 }

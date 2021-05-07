@@ -64,6 +64,7 @@ namespace ParkingCucei
             this.btn_back.TabIndex = 3;
             this.btn_back.Text = "Back";
             this.btn_back.UseVisualStyleBackColor = true;
+            this.btn_back.Click += new System.EventHandler(this.btn_back_Click);
             // 
             // btn_add_new_car
             // 
@@ -74,6 +75,7 @@ namespace ParkingCucei
             this.btn_add_new_car.TabIndex = 4;
             this.btn_add_new_car.Text = "Add New Car";
             this.btn_add_new_car.UseVisualStyleBackColor = true;
+            this.btn_add_new_car.Click += new System.EventHandler(this.btn_add_new_car_Click);
             // 
             // show_cars
             // 
