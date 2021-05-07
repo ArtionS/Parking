@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ParkingCucei
 {
-    public partial class Form1 : Form
+    public partial class Parkings : Form
     {
-        public Form1()
+        public Parkings()
         {
             InitializeComponent();
         }
