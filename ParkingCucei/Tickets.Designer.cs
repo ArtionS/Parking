@@ -77,7 +77,7 @@ namespace ParkingCucei
             // 
             // btnBackTickets
             // 
-            this.btnBackTickets.Location = new System.Drawing.Point(109, 283);
+            this.btnBackTickets.Location = new System.Drawing.Point(262, 295);
             this.btnBackTickets.Name = "btnBackTickets";
             this.btnBackTickets.Size = new System.Drawing.Size(75, 23);
             this.btnBackTickets.TabIndex = 2;
