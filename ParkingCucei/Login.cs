@@ -16,7 +16,7 @@ namespace ParkingCucei
     public partial class Login : Form
     {
         private string connectionString = ConfigurationManager.AppSettings.Get("connectionString");
-        private string username = "";
+        private string userCode = "";
         ConexionBD bd = null;
 
         public Login()
@@ -53,7 +53,7 @@ namespace ParkingCucei
                     }
                 case 1:
                     {
-                        using (MainScreen newWindow = new MainScreen(username))
+                        using (MainScreen newWindow = new MainScreen(userCode))
                         {
                             this.Visible = false;
                             newWindow.ShowDialog();
@@ -96,10 +96,10 @@ namespace ParkingCucei
             string password = txtPasswd.Text;
 
             // Crear query para que utilice los datos ingresados y solo regresa el nombre del  usuario
-            string queryFetch = "SELECT fname FROM users WHERE (id_user='" + code + "'AND passwd=sha2('" + password + "', 256))";
+            string queryFetch = "SELECT id_user FROM users WHERE (id_user='" + code + "'AND passwd=sha2('" + password + "', 256))";
 
-            username = bd.SelectOne(queryFetch);
-            if (username != "")
+            userCode = bd.SelectOne(queryFetch);
+            if (userCode != "")
                 return 1;
             else
                 return 0;
