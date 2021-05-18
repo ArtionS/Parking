@@ -95,6 +95,7 @@ namespace ParkingCucei
             this.Controls.Add(this.label1);
             this.Name = "Parkings";
             this.Text = "Estacionamientos";
+            this.Load += new System.EventHandler(this.Parkings_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
