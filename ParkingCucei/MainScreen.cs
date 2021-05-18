@@ -65,5 +65,15 @@ namespace ParkingCucei
         {
             this.Close();
         }
+
+        private void btnEditUser_Click(object sender, EventArgs e)
+        {
+            using (EditUser newWindow = new EditUser(currentUserID))
+            {
+                this.Visible = false;
+                newWindow.ShowDialog();
+                this.Close();
+            }
+        }
     }
 }

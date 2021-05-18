@@ -112,6 +112,7 @@ namespace ParkingCucei
             this.btnEditUser.TabIndex = 7;
             this.btnEditUser.Text = "Editar";
             this.btnEditUser.UseVisualStyleBackColor = true;
+            this.btnEditUser.Click += new System.EventHandler(this.btnEditUser_Click);
             // 
             // btnExit
             // 
