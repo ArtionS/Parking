@@ -40,12 +40,6 @@ namespace ParkingCucei
             this.btnAgregarUsuario = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.txtEmail = new System.Windows.Forms.TextBox();
-            this.txtBuscar = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.btnBuscarUsuario = new System.Windows.Forms.Button();
-            this.btnEliminarUsuario = new System.Windows.Forms.Button();
-            this.btnGuardarModificacion = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
             this.lblNewPasswd = new System.Windows.Forms.Label();
             this.txtNewPasswd = new System.Windows.Forms.TextBox();
             this.btnVolver = new System.Windows.Forms.Button();
@@ -118,7 +112,7 @@ namespace ParkingCucei
             // 
             // btnAgregarUsuario
             // 
-            this.btnAgregarUsuario.Location = new System.Drawing.Point(607, 60);
+            this.btnAgregarUsuario.Location = new System.Drawing.Point(365, 242);
             this.btnAgregarUsuario.Name = "btnAgregarUsuario";
             this.btnAgregarUsuario.Size = new System.Drawing.Size(98, 47);
             this.btnAgregarUsuario.TabIndex = 10;
@@ -142,65 +136,6 @@ namespace ParkingCucei
             this.txtEmail.Size = new System.Drawing.Size(135, 20);
             this.txtEmail.TabIndex = 8;
             // 
-            // txtBuscar
-            // 
-            this.txtBuscar.Location = new System.Drawing.Point(232, 325);
-            this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(155, 20);
-            this.txtBuscar.TabIndex = 11;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(146, 328);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(80, 13);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "Buscar usuario:";
-            // 
-            // btnBuscarUsuario
-            // 
-            this.btnBuscarUsuario.Location = new System.Drawing.Point(422, 312);
-            this.btnBuscarUsuario.Name = "btnBuscarUsuario";
-            this.btnBuscarUsuario.Size = new System.Drawing.Size(91, 44);
-            this.btnBuscarUsuario.TabIndex = 13;
-            this.btnBuscarUsuario.Text = "Buscar";
-            this.btnBuscarUsuario.UseVisualStyleBackColor = true;
-            this.btnBuscarUsuario.Click += new System.EventHandler(this.btnBuscarUsuario_Click);
-            // 
-            // btnEliminarUsuario
-            // 
-            this.btnEliminarUsuario.Enabled = false;
-            this.btnEliminarUsuario.Location = new System.Drawing.Point(607, 140);
-            this.btnEliminarUsuario.Name = "btnEliminarUsuario";
-            this.btnEliminarUsuario.Size = new System.Drawing.Size(98, 46);
-            this.btnEliminarUsuario.TabIndex = 14;
-            this.btnEliminarUsuario.Text = "Eliminar usuario";
-            this.btnEliminarUsuario.UseVisualStyleBackColor = true;
-            this.btnEliminarUsuario.Click += new System.EventHandler(this.btnEliminarUsuario_Click);
-            // 
-            // btnGuardarModificacion
-            // 
-            this.btnGuardarModificacion.Enabled = false;
-            this.btnGuardarModificacion.Location = new System.Drawing.Point(607, 207);
-            this.btnGuardarModificacion.Name = "btnGuardarModificacion";
-            this.btnGuardarModificacion.Size = new System.Drawing.Size(98, 56);
-            this.btnGuardarModificacion.TabIndex = 15;
-            this.btnGuardarModificacion.Text = "Guardar modificacion de usuario";
-            this.btnGuardarModificacion.UseVisualStyleBackColor = true;
-            this.btnGuardarModificacion.Click += new System.EventHandler(this.btnGuardarModificacion_Click);
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Enabled = false;
-            this.btnCancel.Location = new System.Drawing.Point(607, 312);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(98, 44);
-            this.btnCancel.TabIndex = 16;
-            this.btnCancel.Text = "Cancelar";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
             // lblNewPasswd
             // 
             this.lblNewPasswd.AutoSize = true;
@@ -222,7 +157,7 @@ namespace ParkingCucei
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(607, 392);
+            this.btnVolver.Location = new System.Drawing.Point(484, 243);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(99, 46);
             this.btnVolver.TabIndex = 19;
@@ -234,16 +169,10 @@ namespace ParkingCucei
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(617, 318);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.txtNewPasswd);
             this.Controls.Add(this.lblNewPasswd);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnGuardarModificacion);
-            this.Controls.Add(this.btnEliminarUsuario);
-            this.Controls.Add(this.btnBuscarUsuario);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.txtBuscar);
             this.Controls.Add(this.btnAgregarUsuario);
             this.Controls.Add(this.txtPasswd);
             this.Controls.Add(this.txtEmail);
@@ -275,12 +204,6 @@ namespace ParkingCucei
         private System.Windows.Forms.Button btnAgregarUsuario;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtEmail;
-        private System.Windows.Forms.TextBox txtBuscar;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button btnBuscarUsuario;
-        private System.Windows.Forms.Button btnEliminarUsuario;
-        private System.Windows.Forms.Button btnGuardarModificacion;
-        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label lblNewPasswd;
         private System.Windows.Forms.TextBox txtNewPasswd;
         private System.Windows.Forms.Button btnVolver;

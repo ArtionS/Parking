@@ -64,65 +64,9 @@ namespace ParkingCucei
             txtFName.Text = "";
             txtLName.Text = "";
             txtPasswd.Text = "";
-            txtBuscar.Text = "";
             txtNewPasswd.Text = "";
 
             idToWork = "";
-        }
-
-        private void btnBuscarUsuario_Click(object sender, EventArgs e)
-        {
-            if (searhUsersDB())
-            {
-                switchButtonsToSearch();
-            }
-            else
-            {
-                MessageBox.Show("Usuario no encontrado.", "Codigo no encontrado.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private bool searhUsersDB()
-        {
-            idToWork = txtBuscar.Text;
-            string queryFetch = "select id_user, fname, lname, email, passwd from users where id_user = " + idToWork + ";";
-
-            string fName = "", lName = "", email = "";
-
-            List<string>[] dataList = new List<string>[3];
-
-            dataList = bd.Select(queryFetch, "id_user", "fName", "lName", "email" );
-
-            if (dataList[0].Count <= 0)
-            {
-                idToWork = "";
-                return false;
-            }
-            else
-            {
-                fName = (string)dataList[1].ToArray().GetValue(0);
-                lName = (string)dataList[2].ToArray().GetValue(0);
-                email = (string)dataList[3].ToArray().GetValue(0);
-
-                txtCode.Text = idToWork;
-                txtEmail.Text = email;
-                txtFName.Text = fName;
-                txtLName.Text = lName;
-
-                return true;
-            }
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            switchButtonsToAdd();
-        }
-
-        private void btnEliminarUsuario_Click(object sender, EventArgs e)
-        {
-            deleteUser();
-            clearBoxes();
-            switchButtonsToAdd();
         }
 
         private void deleteUser()
@@ -141,38 +85,6 @@ namespace ParkingCucei
             {
                 MessageBox.Show("Problemas al encontrar el identificador del usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void switchButtonsToAdd()
-        {
-            btnGuardarModificacion.Enabled = false;
-            btnEliminarUsuario.Enabled = false;
-            btnAgregarUsuario.Enabled = true;
-            btnCancel.Enabled = false;
-            txtNewPasswd.Visible = false;
-            lblNewPasswd.Visible = false;
-
-            lblPasswd.Text = "Contraseña:";
-            clearBoxes();
-        }
-
-        private void switchButtonsToSearch()
-        {
-            btnGuardarModificacion.Enabled = true;
-            btnEliminarUsuario.Enabled = true;
-            btnAgregarUsuario.Enabled = false;
-            btnCancel.Enabled = true;
-            txtNewPasswd.Visible = true;
-            lblNewPasswd.Visible = true;
-
-            lblPasswd.Text = "Contraseña actual:";
-        }
-
-        private void btnGuardarModificacion_Click(object sender, EventArgs e)
-        {
-            updateUser();
-            clearBoxes();
-            switchButtonsToAdd();
         }
 
         private void updateUser()
